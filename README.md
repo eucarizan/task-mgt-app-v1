@@ -35,7 +35,7 @@ A secure task management system built with Spring Boot. Users can register, crea
 -->
 
 - Database and Security
-  - Persistend H2 database (file-based).
+  - Persistent H2 database (file-based).
   - Secured endpoints with role-based access.
 
 ---
@@ -243,7 +243,7 @@ Authorization: Basic dXNlcjFAbWFpbC5jb206cGFzc3dvcmQxMjM=
   { "token": "eyJhbGci0iJ..." }
   ```
   - **Validations:**
-    - `401 UNAUTHORIZEDA` for invalid credentials.
+    - `401 UNAUTHORIZED` for invalid credentials.
 -->
 
 [<<](https://github.com/eucarizan/hs-java-backend/blob/main/README.md)
