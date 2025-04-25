@@ -6,11 +6,13 @@ import dev.nj.tms.TaskManagementSystemApplication;
 import dev.nj.tms.config.WebSecurityConfig;
 import dev.nj.tms.exceptions.UserAlreadyExistsException;
 import dev.nj.tms.service.UserService;
+import dev.nj.tms.service.impl.UserDetailsServiceImpl;
 import dev.nj.tms.web.controller.UserController;
 import dev.nj.tms.web.dto.NewUserDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -22,10 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
-@ContextConfiguration(classes = {
-        TaskManagementSystemApplication.class,
-        WebSecurityConfig.class
-})
+@Import({WebSecurityConfig.class})
 public class UserControllerTests {
 
     @Autowired
