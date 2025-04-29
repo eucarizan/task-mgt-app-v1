@@ -10,16 +10,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskTests {
 
+    private final AppUser testUser = new AppUser("user1@mail.com", "user1Pass!");
+
     @Test
     public void taskCreationTest() {
-        AppUser user = new AppUser("user1@mail.com", "pasword");
         Task task = new Task();
         task.setId(1L);
         task.setTitle("new task");
         task.setDescription("a task for anyone");
         task.setStatus(TaskStatus.CREATED);
         task.setCreatedAt(LocalDateTime.now());
-        task.setAuthor(user);
+        task.setAuthor(testUser);
 
         assertEquals(1L, task.getId());
         assertEquals("new task", task.getTitle());
@@ -32,12 +33,24 @@ public class TaskTests {
     @Test
     public void titleCannotBeNullTest() {
         assertThrows(IllegalArgumentException.class, () ->
-                new Task(null, "description", new AppUser("user1@mail.com", "password")));
+                new Task(null, "description", testUser));
+    }
+
+    @Test
+    public void titleCannotBeBlankTest() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new Task("", "description", testUser));
     }
 
     @Test
     public void descriptionCannotBeNullTest() {
         assertThrows(IllegalArgumentException.class, () ->
-                new Task("title", null, new AppUser("user1@mail.com", "password")));
+                new Task("title", null, testUser));
+    }
+
+    @Test
+    public void descriptionCannotBeBlankTest() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new Task("title", "", testUser));
     }
 }

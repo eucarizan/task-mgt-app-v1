@@ -28,8 +28,20 @@ public class AppUserTests {
     }
 
     @Test
+    public void emailInvalidFormatTest() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new AppUser("user1@mail", "user1Pass!"));
+    }
+
+    @Test
     public void passwordCannotBeNullTest() {
         assertThrows(IllegalArgumentException.class, () ->
                 new AppUser("user1@mail.com", null));
+    }
+
+    @Test
+    public void passwordMinimumLengthTest() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new AppUser("user1@mail.com", "pass"));
     }
 }

@@ -51,8 +51,13 @@ public class Task {
     }
 
     public void setTitle(String title) {
-        this.title = Optional.ofNullable(title)
-                .orElseThrow(() -> new IllegalArgumentException("Title cannot be null"));
+        if (title == null) {
+            throw new IllegalArgumentException("Title cannot be null");
+        }
+        if (title.trim().isEmpty()) {
+            throw new IllegalArgumentException("Title cannot be empty");
+        }
+        this.title = title;
     }
 
     public String getDescription() {
@@ -60,8 +65,13 @@ public class Task {
     }
 
     public void setDescription(String description) {
-        this.description = Optional.ofNullable(description)
-                .orElseThrow(() -> new IllegalArgumentException("Description cannot be null"));
+        if (description == null) {
+            throw new IllegalArgumentException("Description cannot be null");
+        }
+        if (description.trim().isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be blank");
+        }
+        this.description = description;
     }
 
     public TaskStatus getStatus() {

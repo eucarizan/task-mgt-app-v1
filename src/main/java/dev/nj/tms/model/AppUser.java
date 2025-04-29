@@ -34,8 +34,13 @@ public class AppUser {
     }
 
     public void setEmail(String email) {
-        this.email = Optional.ofNullable(email)
-                .orElseThrow(() -> new IllegalArgumentException("Email cannot be null"));
+        if (email == null) {
+            throw new IllegalArgumentException("Email cannot be null");
+        }
+        if (!email.matches("\\w+(\\.\\w+){0,2}@\\w+\\.\\w+")) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
+        this.email = email;
     }
 
     public String getPassword() {
@@ -43,7 +48,12 @@ public class AppUser {
     }
 
     public void setPassword(String password) {
-        this.password = Optional.ofNullable(password)
-                .orElseThrow(() -> new IllegalArgumentException("Password cannot be null"));
+        if (password == null) {
+            throw new IllegalArgumentException("Password cannot be null");
+        }
+        if (password.length() < 6) {
+            throw new IllegalArgumentException("Password should be at least 6 characters");
+        }
+        this.password = password;
     }
 }
