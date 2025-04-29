@@ -15,7 +15,7 @@ public class UserMapper {
 
     public AppUser toEntity(NewUserDto dto) {
         return new AppUser(
-                dto.email(),
+                dto.email().toLowerCase(),
                 encoder.encode(dto.password())
         );
     }

@@ -20,8 +20,9 @@ A secure task management system built with Spring Boot. Users can register, crea
   - Basic Auth backward compatibility.
 -->
 
-<!--
 - Task Management
+  - Create and view tasks.
+<!--
   - Create, view, and filter tasks.
   - Assign tasks to users.
   - Update task status (`CREATED`, `IN_PROGRESS`, `COMPLETED`).
@@ -49,10 +50,12 @@ Endpoint|Method|Description|Auth Required
 [`/api/auth/token`](#post-apiauthtoken)|POST|Get JWT token (Basic Auth).|Basic Auth
 --->
 
-<!--
 ### 2. Tasks
 Endpoint|Method|Description|Auth Required
 :-:|:-:|:-:|:-:
+[`/api/tasks`](#post-apitasks)|POST|Create a new Task.|Basic Auth
+[`/api/tasks`](#get-apitasks)|GET|List all tasks (filter by `author`).|Basic Auth
+<!--
 `/api/tasks`|POST|Create a new task.|JWT/Basic Auth
 [`/api/tasks`](#get-apitasks)|GET|List all tasks (filter by `author` / `assignee`).|JWT/Basic Auth
 `/api/tasks/{taskId}/assign`|PUT|Assign/unassign a task.|Task Author
@@ -111,14 +114,15 @@ mvn spring-boot:run
 ---
 
 ## Example Requests
-### 1. User Registration
+### 1. User Management
 <!--
 ### 1. User Registration and Authentication
 -->
 #### Register a User
 **Request:**
 ```http
-POST /api/accounts
+POST /api/accounts HTTP/1.1
+Host: localhost:8080
 Content-Type: application/json
 
 {
@@ -143,6 +147,36 @@ Authorization: Basic dXNlcjFAbWFpbC5jb206cGFzc3dvcmQxMjM=
 ```
 -->
 
+### 2. Task Management
+#### Adding a Task
+**Request:**
+```http
+POST /api/tasks HTTP/1.1
+Host: localhost:8080
+Authorization: Basic dXNlcjFAbWFpbC5jb206cGFzc3dvcmQ= # Base64 for 'user1@mail.com:password'
+Content-Type: application/json
+
+{
+  "title": "new task",
+  "description": "a task for anyone"
+}
+```
+
+**Response:**
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "id": "1",
+  "title": "new task",
+  "description": "a task for anyone",
+  "status": "CREATED",
+  "author": "user@mail.com"
+}
+```
+
+
 <!--
 ## Future Roadmap
 - File attachments for tasks/comments.
@@ -166,7 +200,6 @@ Authorization: Basic dXNlcjFAbWFpbC5jb206cGFzc3dvcmQxMjM=
     - `409 CONFLICT` if email already exists.
   - **Success**: `200 OK`.
 
-<!--
 <a id="post-apitasks"></a>
 - **POST** `/api/tasks`
   - Creates a new task with `title` (non-blank) and `description` (non-blank).
@@ -184,9 +217,7 @@ Authorization: Basic dXNlcjFAbWFpbC5jb206cGFzc3dvcmQxMjM=
   }
   ```
   - **Status:** Defaults to `CREATED`.
--->
 
-  <!--
 <a id="get-apitasks"></a>
 - **GET** `/api/tasks`
   - Secured endpoint requiring **Basic HTTP Authentication**.
@@ -205,7 +236,6 @@ Authorization: Basic dXNlcjFAbWFpbC5jb206cGFzc3dvcmQxMjM=
   ]
   ```
   - Requires **Basic Auth** (`401` if unauthorized).
-  -->
 
 <!--
 <a id="put-apitasks-assign"></a>
