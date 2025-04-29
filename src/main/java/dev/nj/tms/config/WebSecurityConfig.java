@@ -23,6 +23,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/error", "/actuator/shutdown", "/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/tasks").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/api/tasks").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/accounts").permitAll()
                 )
                 .sessionManagement((session) -> session
